@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyric Finder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #d35400;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #d35400;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #d35400;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn {
+            width: calc(100% - 20px);
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #d35400;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #e67e22;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            height: 200px;
+            padding: 10px;
+            margin: 20px 0;
+            border: 2px solid #d35400;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
+        ::placeholder {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lyric Finder 🎧</h1>
+        <a>Github</a>
+        <form id="lyricsForm">
+            <input type="text" placeholder="Enter song name" id="songName" name="song_name">
+            <a>or</a>
+            <input type="text" placeholder="Enter artist name" id="artistName" name="artist_name">
+            <button type="submit" class="btn">Get Lyrics</button>
+        </form>
+        <div id="lyricsResult" style="display: none;">
+            <textarea id="lyricsTextarea" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('lyricsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetch('/lyrics?' + new URLSearchParams(new FormData(this)))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        document.getElementById('lyricsTextarea').value = data.lyrics;
+                        document.getElementById('lyricsResult').style.display = 'block';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
