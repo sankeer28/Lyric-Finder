@@ -1,6 +1,7 @@
 # Lyric-Finder
 
 Lyric Finder is a web application built with Flask and powered by the Genius API. It allows users to search for song lyrics by providing the song name and artist.
+![Recording](https://github.com/sankeer28/Lyric-Finder/assets/112449287/bc2f04f6-59b3-4690-b0c8-32d07a43518e)
 
 ## Features
 
